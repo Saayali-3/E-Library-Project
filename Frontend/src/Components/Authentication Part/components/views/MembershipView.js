@@ -2,14 +2,16 @@ import React from 'react';
 import './styles/membership.css';
 import SideBar from '../../../User_Side/SideBar/SideBar';
 
+import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 
-import {editUserThunk,fetchAllUsersThunk } from "../../thunks";
+import {editUserThunk,fetchAllUsersThunk,fetchUserIdThunk } from "../../thunks";
 class Membership extends React.Component {
 	
 constructor(props) {
 		super(props);
-		this.state = { userEntity:[]
+		this.state = { userEntity:[],
+			userId:0
 	};
 	}
 	componentDidMount(){
@@ -52,6 +54,7 @@ constructor(props) {
 				   userEntity:userEn
 			   }
 		   )
+		this.props.fetchUserId(userEn[0].id)
         this.props.editUserEntity(userEn[0])
         }
 	};
@@ -74,21 +77,27 @@ constructor(props) {
 		//	this.props.history.push("/login");
 		  };
 
-		  goBack() {
-			window.history.back();
-		  }
+		 
+
+click(){
+	this.props.history.push(`/users/${this.props.userId}`);
+}
+
 
   render() {
 	console.log(this.state)
 	return (
 
 			<div >
-				
-			
-				<ul className="ulist">
-  <li className="list">Home</li>
-  
-  <li className="userapprove">Membership Plan</li>
+				<form onSubmit={this.click}>
+				{/*<div className="memlink">
+				style={{ textDecoration: 'none', color:'white', marginTop:'50px'}}
+				</div>*/}
+				<ul className="memlist">
+					<li  className="mlist">
+				<Link to={{pathname: `users/${this.props.userId}`}} >Home</Link>
+				</li>
+  <li className="memapprove">Membership Plan</li>
 </ul>
 
 <br/>
@@ -126,7 +135,9 @@ constructor(props) {
 
   </ul>
   </div>
-</div>
+
+
+</form></div>
 		
 	)
   }
@@ -137,6 +148,7 @@ const mapState = (state) => {
 	return {
 		allUsers: state.allUsers,
 		user:state.user,
+		userId:state.userId.payload
 	  };
 	
   };
@@ -144,6 +156,7 @@ const mapState = (state) => {
 	return {
 	  fetchAllUsers: () => dispatch(fetchAllUsersThunk()),
       editUserEntity:(user)=> dispatch(editUserThunk(user)),
+	  fetchUserId:(id)=>dispatch(fetchUserIdThunk(id))
 	 // addUser: (User) => dispatch(addUserThunk(User, ownProps)),
 	 // addUserEntity: (userEntity) => dispatch(addUserEntityThunk(userEntity, ownProps)),
 	};

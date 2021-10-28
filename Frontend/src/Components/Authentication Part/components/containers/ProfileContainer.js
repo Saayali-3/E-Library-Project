@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import {
   fetchUserThunk,
   signOutThunk,
+  fetchUserIdThunk
 } from "../../thunks";
 
 import { Profile, UserView } from "../views";
@@ -12,6 +13,7 @@ class ProfileContainer extends Component {
    
     super(props);
     this.props.fetchUser(this.props.match.params.id);
+    this.props.fetchUserId(this.props.match.params.id);
     this.state = {
       
       user:[]
@@ -33,6 +35,7 @@ class ProfileContainer extends Component {
   render() {
     return (
       <Profile
+      userId={this.props.userId}
         user={this.props.user}
         handleSignout={this.handleSignout}
       />
@@ -44,6 +47,7 @@ class ProfileContainer extends Component {
 const mapState = (state) => {
   return {
     user: state.user,
+    userId:state.userId.payload
   };
 };
 
@@ -51,6 +55,8 @@ const mapDispatch = (dispatch) => {
   return {
     fetchUser: (id) => dispatch(fetchUserThunk(id)),
      signOut:()=>dispatch(signOutThunk()),
+     
+	  fetchUserId:(id)=>dispatch(fetchUserIdThunk(id))
   };
 };
 

@@ -52,13 +52,14 @@ this.props.confirmUserEntity(token).then(
 			 <div className="text-center">
 			 
 		
-			 <h2 className="h3 mb-3 font-weight-normal"><div show={this.state.show}>
+			 <h2 className="h3 mb-3 font-weight-normal" style={{marginTop:'70px'}}><div show={this.state.show}>
 				 {this.state.message}
 			 </div></h2>
 			 <br/>	
-			 <Link to="/login">Login
+			 <div >
+			 <Link to="/login" style={{marginTop:'70px'}}>Go to Login
 </Link>			 
-		
+</div>
 			 </div>
 		   </div>
 		)

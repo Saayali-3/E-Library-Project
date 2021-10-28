@@ -31,7 +31,7 @@ class AdminSignupContainer extends Component {
       //check is the username length great than 5 and not duplicate username in database
       const users=this.props.allUsers;
       console.log(users)
-    const { username } = this.state;
+    const { username,email } = this.state;
     let errors = { ...this.state.errors };
     let isValidName = true;
     if (username.length < 5) {
@@ -39,12 +39,16 @@ class AdminSignupContainer extends Component {
       errors.username = "Invalid username, please enter more than 4 characters";
     }
     for(let i=0;i<users.length;i++){
-      if(this.state.username===users[i].username){
+      if(this.state.username===users[i].username || this.state.email==users[i].email ){
         isValidName = false;
-        errors.username = "Invalid username, duplicate name";
+      //  errors.email="Duplicate email";
+        errors.username = " Duplicate name or Duplicate email";
+       
        break;
      }
+     
    }
+  
     if (isValidName) {
       this.props.addUser(this.state)
       errors.username = "valid username";

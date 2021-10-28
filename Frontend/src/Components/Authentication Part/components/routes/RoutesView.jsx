@@ -29,7 +29,7 @@ const RoutesView = () => {
       <Route exact path="/adminlogin" component={AdminLoginContainer} />
     
     
-      <Route exact path="/profile/:id" component={ProfileContainer} />
+      <Route exact path="/view_profile/:id" component={ProfileContainer} />
     </Switch>
   );
 };

@@ -9,7 +9,7 @@ import { UserView } from "../views";
 
 class UserContainer extends Component {
   constructor(props) {
-   
+   console.log(props)
     super(props);
     this.props.fetchUser(this.props.match.params.id);
     this.state = {

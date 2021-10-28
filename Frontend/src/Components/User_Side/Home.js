@@ -12,6 +12,13 @@ import { UserContainer } from '../Authentication Part/components/containers';
 import BOOKSLIST from '../Books_Data.json';
 
 import './SideBar/SideBar.css';
+
+import { connect } from "react-redux";
+import {
+  fetchUserThunk,
+  signOutThunk,
+  fetchUserIdThunk
+} from "../Authentication Part/thunks";
 // import './Bootstrap.css';
 import { Link } from 'react-router-dom';
 // import Logo from '../Logo.png';
@@ -115,7 +122,6 @@ function Home() {
 
   // Home
   const scrollToTop = () => window.scrollTo({ top: 0, behavior: "smooth"});
-
   // Genre
   const gotoGenre = () =>
     window.scrollTo({
@@ -134,7 +140,18 @@ function Home() {
 
 
     // const SIDEBAR = React.forwardRef((ref) => <SideBar genreRef={Genre} testimonialRef={testimonial}/>);
-
+/*const fetchuser = (props) =>
+{
+  console.log(props)
+  this.props.fetchUserId(this.props.user.id)
+  this.state = { userEntity:[],
+    userId:0
+};
+}*/
+ const url=window.location.href;
+   console.log(url)
+   const spliturl =url.split("users/")[1]
+   console.log(spliturl)
     return (
         <div className="home">
             
@@ -300,7 +317,7 @@ function Home() {
                   />
                 </div>
                 <div className="name-membership">
-                  <Link to="/view_profile">
+                  <Link to={{pathname:`/view_profile/${spliturl}`}}>
                     <div className="profile_name">Hello Guest - Sign In</div>
                   </Link>
                   <Link to="/membership">
@@ -377,5 +394,23 @@ function Home() {
         </div>
     )
 }
+const mapState = (state) => {
+  console.log(state)
+ 
 
-export default Home
+
+  return {
+    user: state.user,
+    userId:state.userId.payload
+  };
+};
+const mapDispatch = (dispatch) => {
+  return {
+    fetchUser: (id) => dispatch(fetchUserThunk(id)),
+     signOut:()=>dispatch(signOutThunk()),
+    
+	  fetchUserId:(id)=>dispatch(fetchUserIdThunk(id))
+  };
+};
+
+export default connect(mapState, mapDispatch)(Home);

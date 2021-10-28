@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import {authenticateUser,fetchAllUsersThunk} from '../../thunks/index';
+import {authenticateUser,fetchAllUsersThunk,fetchUserIdThunk} from '../../thunks/index';
 import { LoginFormView } from "../views";
 
 class LoginFormContainer extends Component {
@@ -49,6 +49,7 @@ componentDidMount(){
       })
       console.log(userEn[0])
       if(userEn[0].user_type=="user" && userEn[0].enabled==true){
+        this.props.fetchUserId(userEn[0].id);
         return this.props.history.push(`/users/${userEn[0].id}`);
        // return this.props.history.push("/approve");
       }
@@ -114,11 +115,17 @@ console.log(state)
         auth:state.allUsers.payload.isLoggedIn
     };
   }
+  else if(state.userId.type=="FETCH_USER_ID"){
+    return {
+      userId:state.userId.payload
+    }
+  }
 };
 
 const mapDispatchToProps = dispatch => {
     return {
       fetchAllUsers: () => dispatch(fetchAllUsersThunk()),
+      fetchUserId:(id)=>dispatch(fetchUserIdThunk(id)),
         authenticateUser: (username, password) => dispatch(authenticateUser(username, password))
         
 	  
