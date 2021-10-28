@@ -1,23 +1,25 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import Admin from "../../../Admin_Side/Admin";
-import "./styles/user.css"
+import "./styles/Profile.css"
 
 import SideBar from '../../../User_Side/SideBar/SideBar';
 const Profile = (props) => {
   console.log(props.user.user_type)
-  if(props.user.user_type=="user")
+  //if(props.user.user_type=="user")
   
   return (
     <>
-    
-          <div className="row-no-gutters">
 
-          <ul className="ulist">
-  <li className="list">Home</li>
-  
-  <li className="userapprove">Membership Plan</li>
+    
+
+          <ul className="prolist">
+          <li className="plist">
+<Link to={{pathname: `/users/${props.userId}`}} style={{color:'white'}} >Home</Link>
+</li>
+<li className="profile">PROFILE </li>
 </ul>
+<div className="row-no-gutters">
                  <div className="col-md-8 mx-auto">
           <h1>Welcome {props.user.username}!</h1>
           

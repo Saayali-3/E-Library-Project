@@ -40,9 +40,9 @@ class SignupFormContainer extends Component {
       errors.username = "Invalid username, please enter more than 4 characters";
     }
     for(let i=0;i<users.length;i++){
-      if(this.state.username===users[i].username){
+      if(this.state.username===users[i].username || this.state.email==users[i].email ){
         isValidName = false;
-        errors.username = "Invalid username, duplicate name";
+        errors.username = "Duplicate name or Duplicate email";
        break;
      }
    }

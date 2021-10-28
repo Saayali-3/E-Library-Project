@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 import "./styles/Approve.css"
 import { connect } from "react-redux";
-
-import {fetchAllUsersThunk,editUserThunk } from "../../thunks";
+import { Link } from "react-router-dom";
+import {fetchAllUsersThunk,editUserThunk,fetchUserIdThunk } from "../../thunks";
 
 class ApproveProcess extends Component {
     constructor(props) {
@@ -12,7 +12,8 @@ class ApproveProcess extends Component {
         this.state = {  
             
            users:[] ,
-           selectedUser:[]
+           selectedUser:[],
+           userId:0
         };
        
         console.log(this.state.users)
@@ -52,6 +53,7 @@ approveUser(x){
         }
     )
     console.log(userEn[0])
+    this.props.fetchUserId(userEn[0].id)
     this.props.editUserEntity(userEn[0])
    
 
@@ -90,7 +92,7 @@ hidden={!employee.enabled}
                
 
                <ul className="ulist">
-  <li className="list"><a className="active" href="admin">Admin Home</a></li>
+  <li className="list"><Link to={{pathname: `users/${this.props.userId}`}} >Admin Home</Link></li>
   <li className="userapprove">User List</li>
 </ul>
                
@@ -150,6 +152,7 @@ const mapState = (state) => {
 	
 	return {
 		allUsers: state.allUsers,
+		userId:state.userId.payload
 	  };
 	
   };
@@ -157,6 +160,7 @@ const mapState = (state) => {
 	return {
 	  fetchAllUsers: () => dispatch(fetchAllUsersThunk()),
       editUserEntity:(user)=> dispatch(editUserThunk(user)),
+	  fetchUserId:(id)=>dispatch(fetchUserIdThunk(id))
 	 	};
   };
   

@@ -8,7 +8,9 @@ import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import { useHistory } from 'react-router';
 
+import { connect } from "react-redux";
 
+import {editUserThunk,fetchAllUsersThunk,fetchUserIdThunk } from "../../Authentication Part/thunks";
 import { Link } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
@@ -27,23 +29,29 @@ const useStyles = makeStyles((theme) => ({
 
 
 
-export default function ButtonAppBar() {
+class ButtonAppBar extends React.Component {
  
+  constructor(props) {
+    console.log(props)
+		super(props);
+    this.props.fetchUserId(this.props.user.id)
+		this.state = { userEntity:[],
+			userId:0
+	};
+	}
 
-  const classes = useStyles();
-
-
+render(){
   return (
-    <div className={classes.root}>
+    <div >
       <AppBar position="static">
         <Toolbar>
-          <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
+          <IconButton edge="start"  color="inherit" aria-label="menu">
             <MenuIcon />
           </IconButton>
-          <Typography variant="h6" className={classes.title}>
+          <Typography variant="h6" >
             News
           </Typography>
-          <Link to="/view_profile">
+          <Link to={{pathname: `/view_profile/${this.props.userId}`}}  style={{paddingLeft:'1099px', textDecoration: 'none', color:'white'}} >
           Profile
           </Link>
         </Toolbar>
@@ -51,3 +59,25 @@ export default function ButtonAppBar() {
     </div>
   );
 }
+}
+
+const mapState = (state) => {
+	console.log(state)
+	
+	return {
+		allUsers: state.allUsers,
+		user:state.user,
+		userId:state.userId.payload
+	  };
+	
+  };
+  const mapDispatch = (dispatch, ownProps) => {
+	return {
+	  fetchAllUsers: () => dispatch(fetchAllUsersThunk()),
+      editUserEntity:(user)=> dispatch(editUserThunk(user)),
+	  fetchUserId:(id)=>dispatch(fetchUserIdThunk(id))
+	 // addUser: (User) => dispatch(addUserThunk(User, ownProps)),
+	 // addUserEntity: (userEntity) => dispatch(addUserEntityThunk(userEntity, ownProps)),
+	};
+  }; 
+export default connect(mapState, mapDispatch)(ButtonAppBar);

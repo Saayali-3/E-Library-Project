@@ -1,0 +1,39 @@
+.prolist {
+    list-style-type: none;
+
+    font: bold;
+    overflow:hidden;
+    background-color: rgb(126, 100, 240);
+    height: 50px;
+    /*width: 1237px;*/
+  }
+  
+  .plist {
+    float: left;
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 16px 6px;
+    text-decoration: none;
+   
+  }
+  
+  /*.plist a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 16px 6px;
+    text-decoration: none;
+  }
+  
+  li a:hover {
+    background-color: #111;
+  }*/
+
+  .profile{
+      margin-left: 600px;
+      color: rgb(255, 255, 255);
+      margin-top: 10px;
+      font-size: 20px;
+      font: bold;
+  }
