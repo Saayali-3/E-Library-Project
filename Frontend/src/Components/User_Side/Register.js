@@ -18,10 +18,7 @@ function Register() {
     return (
         <div className="register">
             <Link to='/'>
-                {/* <img
-                    className="register__logo"
-                    src="https://www.virtusa.com/content/dam/virtusa/images/logo/shared/virtusa-logo.png"
-                /> */}
+               
                 <img alt="Logo" src={Logo} 
                     className="register__logo"
                 />
